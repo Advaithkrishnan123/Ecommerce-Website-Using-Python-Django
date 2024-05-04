@@ -1,0 +1,68 @@
+{% extends 'Customer/index.html' %}
+{% block body %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+
+    <style>
+    /* Add custom CSS for curved table */
+    .rounded-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 2px solid #dddddd; /* Add a contrasting border color */
+        border-radius: 20px; /* Adjust the radius as needed */
+        overflow: hidden;
+        margin-bottom: 20px; /* Add margin at the bottom */
+    }
+
+    .rounded-table th,
+    .rounded-table td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+
+</style>
+</head>
+
+<body>
+<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">My Order</h3>
+
+<form id="form1" name="form1" method="post" action="">
+    <table border="1" class="table table-bordered rounded-table">
+  <tr style="color: black;background-color: #D19C97">
+      <th scope="col">Sl.No</th>
+      <th scope="col">Date</th>
+      <th scope="col">Status</th>
+      <th scope="col">Payment Status</th>
+      <th scope="col">Payment Date</th>
+      <th scope="col">Amount</th>
+      <th scope="col">UserInfo</th>
+      <th scope="col"></th>
+
+    </tr>
+      {% for i in data %}
+    <tr>
+      <td style="color: black">&nbsp;{{ forloop.counter }}</td>
+      <td style="color: black">&nbsp;{{ i.Date }}</td>
+      <td style="color: black">&nbsp;{{ i.Status }}</td>
+      <td style="color: black">&nbsp;{{ i.Payment_Status }}</td>
+      <td style="color: black">&nbsp;{{ i.Payment_Date }}</td>
+      <td style="color: black"> {{ i.Amount }}</td>
+      <td style="color: black"><b>Name:</b>{{ i.CUSTOMER.Name }}<br><b>Contact:</b>{{ i.CUSTOMER.Phone }}</td>
+      <td>
+          <a href="/cancel_order/{{ i.id }}" onclick="return confirm('Are you sure to cancel?')" class="btn btn-outline-danger">Cancel</a><br><br>
+          <a href="/payment_mode/{{ i.id }}#aa" class="btn btn-outline-primary">Make Payment</a>
+      </td>
+
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+</html>
+{% endblock %}

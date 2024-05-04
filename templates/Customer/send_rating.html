@@ -1,0 +1,127 @@
+{% extends 'Customer/index.html' %}
+{% block body %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body>
+<form method="post" action="/send_rating_post/{{ id }}">
+    {% csrf_token %}
+    <div class="container">
+        <div class="rating-wrap" style="background:rgba(249,255,249,0);">
+{#            <div class="center col-lg-9">#}
+                <fieldset class="rating">
+                    <input type="radio" name="star" id="star5" value="5"/><label for="star5"></label>
+                    <input type="radio" name="star" id="star4" value="4" /><label for="star4"></label>
+                    <input type="radio" name="star" id="star3" value="3" /><label for="star3"></label>
+                    <input type="radio" name="star" id="star2" value="2" /><label for="star2"></label>
+                    <input type="radio" name="star" id="star1" value="1" /><label for="star1"></label>
+                </fieldset>
+{#            </div>#}
+{#            <h2 id="rating-value"></h2>#}
+            <div><br><br><br><br><br><br></div>
+            <div>
+                <input type="submit" class="btn btn-primary w-75" value="SUBMIT">
+            </div>
+
+        </div>
+    </div>
+
+    </form>
+<style>
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: Arial;
+    background: #ffffff; /* Changed to white */
+}
+
+/* Container Styles */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Rating Wrap Styles */
+.rating-wrap {
+    max-width: 100%;
+    margin: auto;
+    padding: 15px;
+    border-color: #ff0000;
+    box-shadow: 0 0 3px 0 rgba(252, 255, 249, 0.2);
+    text-align: center;
+}
+
+/* Center Styles */
+.center {
+    width: 162px;
+    margin: auto;
+}
+
+/* Rating Value Styles */
+#rating-value {
+    margin: 40px auto 0;
+    width: 110px;
+    padding: 10px 5px;
+    text-align: center;
+    box-shadow: inset 0 0 2px 1px rgba(46, 204, 113, .2);
+}
+
+/* Rating Styles */
+.rating {
+    border: none;
+    float: left;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    color: #b2b2b2;
+    float: right;
+    cursor: pointer;
+}
+
+.rating label:before {
+    content: '\f005';
+    font-family: fontAwesome;
+    margin: 5px;
+    font-size: 3rem; /* Increased star size */
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Checked and Hover Styles */
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #ffdf19;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+    color: #2ddc76;
+}
+
+</style>
+
+
+</body>
+</html>
+{% endblock %}

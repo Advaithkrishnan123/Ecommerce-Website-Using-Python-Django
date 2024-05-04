@@ -1,0 +1,69 @@
+{% extends 'Seller/index.html' %}
+{% block body %}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+    <style>
+    /* Add custom CSS for curved table */
+    .rounded-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 2px solid #dddddd; /* Add a contrasting border color */
+        border-radius: 20px; /* Adjust the radius as needed */
+        overflow: hidden;
+        margin-bottom: 20px; /* Add margin at the bottom */
+    }
+
+    .rounded-table th,
+    .rounded-table td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+
+</style>
+</head>
+
+<body>
+<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">Sales Report</h3><br>
+
+<form id="form1" name="form1" method="post" action="">
+    <table border="1" class="table table-bordered rounded-table">
+  <tr style="color: black;background-color: #D19C97">
+      <th scope="col">Sl.No</th>
+      <th scope="col">Date</th>
+      <th scope="col">Order Status</th>
+      <th scope="col">Payment Status</th>
+      <th scope="col">Payment Date</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">UserInfo</th>
+
+
+    </tr>
+      {% for i in data %}
+    <tr>
+      <td style="color: black">&nbsp;{{ forloop.counter }}</td>
+      <td style="color: black">&nbsp;{{ i.ORDERR.Date }}</td>
+      <td style="color: black">&nbsp;{{ i.ORDERR.Status }}</td>
+      <td style="color: black">&nbsp;{{ i.ORDERR.Payment_Status }}</td>
+      <td style="color: black">&nbsp;{{ i.ORDERR.Payment_Date }}</td>
+      <td style="color: black"> {{ i.ORDERR.Amount }}</td>
+        <td style="color: black"> {{ i.Quantity }}</td>
+      <td style="color: black"><b>Name:</b>{{ i.ORDERR.CUSTOMER.Name }}<br><b>Contact:</b>{{ i.ORDERR.CUSTOMER.Phone }}</td>
+
+
+
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+</html>
+
+{% endblock %}

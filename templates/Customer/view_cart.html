@@ -1,0 +1,58 @@
+{% extends 'Customer/index.html' %}
+{% block body %}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+    <style>
+    /* Add custom CSS for curved table */
+    .rounded-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 2px solid #dddddd; /* Add a contrasting border color */
+        border-radius: 20px; /* Adjust the radius as needed */
+        overflow: hidden;
+        margin-bottom: 20px; /* Add margin at the bottom */
+    }
+
+    .rounded-table th,
+    .rounded-table td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+
+</style>
+</head>
+
+<body>
+<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">Cart</h3>
+
+<form id="form1" name="form1" method="post" action="">
+    <table border="1" class="table table-bordered rounded-table">
+  <tr style="color: black;background-color: #D19C97">
+      <th scope="col">Sl.No</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Userinfo</th>
+      <th scope="col">Product Info</th>
+      <th scope="col">&nbsp;</th>
+    </tr>
+      {% for i in data %}
+    <tr>
+      <td style="color: black">&nbsp;{{ forloop.counter }}</td>
+      <td style="color: black">&nbsp;{{ i.Quantity }}</td>
+      <td style="color: black"><b style="color: black">Name : </b> {{ i.CUSTOMER.Name }}<br><b style="color: black">Contact :</b>{{ i.CUSTOMER.Phone }}</td>
+      <td style="color: black"><b style="color: black">Name : </b> {{ i.PRODUCT.Name }}<br>
+          <b style="color: black">Image : </b><img src="{{ i.PRODUCT.Image }}" width="100px" height="100px"> <br><b style="color:black">Amount</b> {{ i.PRODUCT.Price }} </td>
+      <td style="color: black"><a href="/place_order/{{ i.id }}" class="btn btn-outline-primary">Place Order</a></td>
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+</html>
+{% endblock %}

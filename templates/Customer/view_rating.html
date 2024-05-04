@@ -1,0 +1,60 @@
+{% extends 'Customer/index.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+
+     <style>
+    /* Add custom CSS for curved table */
+    .rounded-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 2px solid #dddddd; /* Add a contrasting border color */
+        border-radius: 20px; /* Adjust the radius as needed */
+        overflow: hidden;
+        margin-bottom: 20px; /* Add margin at the bottom */
+    }
+
+    .rounded-table th,
+    .rounded-table td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+
+</style>
+</head>
+
+<body>
+<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">View Rating</h3><br>
+
+<form action="" method="get">
+    <table border="1" class="table table-bordered rounded-table">
+  <tr style="color: black;background-color: #D19C97">
+    <th scope="col">slno</th>
+    <th scope="col">Customer</th>
+    <th scope="col">Products</th>
+    <th scope="col">Date</th>
+    <th scope="col">Rating</th>
+  </tr>
+    {% for i in data %}
+  <tr>
+    <td style="color: black"> {{ forloop.counter }}</td>
+    <td style="color: black"> {{ i.CUSTOMER.Name}}</td>
+    <td style="color: black"> {{ i.PRODUCT.Name}}</td>
+    <td style="color: black"> {{ i.date}}</td>
+    <td><img src="{{ i.Rating.0 }}" width="20" height="20">
+        <img src="{{ i.Rating.1 }}" width="20" height="20">
+        <img src="{{ i.Rating.2 }}" width="20" height="20">
+        <img src="{{ i.Rating.3 }}" width="20" height="20">
+        <img src="{{ i.Rating.4 }}" width="20" height="20"></td>
+  </tr>
+    {% endfor %}
+</table>
+</form>
+</body>
+</html>
+{% endblock %}
