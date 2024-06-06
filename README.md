@@ -10,3 +10,4 @@ Shopping cart
 User authentication
 Product reviews and ratings
 Discount codes and promotions
+![thumbnail1](https://github.com/Advaithkrishnan123/Ecommerce-Website-Using-Python-Django/assets/156499805/355407f5-943b-4934-bcb4-ff2e64248329)
