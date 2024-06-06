@@ -1,6 +1,79 @@
+{#{% extends 'Seller/index.html' %}#}
+{#{% block body %}#}
+{##}
+{##}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#    <style>#}
+{#    /* Add custom CSS for curved table */#}
+{#    .rounded-table {#}
+{#        border-collapse: separate;#}
+{#        border-spacing: 0;#}
+{#        border: 2px solid #dddddd; /* Add a contrasting border color */#}
+{#        border-radius: 20px; /* Adjust the radius as needed */#}
+{#        overflow: hidden;#}
+{#        margin-bottom: 20px; /* Add margin at the bottom */#}
+{#    }#}
+{##}
+{#    .rounded-table th,#}
+{#    .rounded-table td {#}
+{#        padding: 8px;#}
+{#        text-align: left;#}
+{#        border: 1px solid #dddddd;#}
+{#    }#}
+{##}
+{##}
+{#</style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">Sales Report</h3><br>#}
+{##}
+{#<form id="form1" name="form1" method="post" action="">#}
+{#    <table border="1" class="table table-bordered rounded-table">#}
+{#  <tr style="color: black;background-color: #D19C97">#}
+{#      <th scope="col">Sl.No</th>#}
+{#      <th scope="col">Date</th>#}
+{#      <th scope="col">Order Status</th>#}
+{#      <th scope="col">Payment Status</th>#}
+{#      <th scope="col">Payment Date</th>#}
+{#      <th scope="col">Amount</th>#}
+{#      <th scope="col">Quantity</th>#}
+{#      <th scope="col">UserInfo</th>#}
+{##}
+{##}
+{#    </tr>#}
+{#      {% for i in data %}#}
+{#    <tr>#}
+{#      <td style="color: black">&nbsp;{{ forloop.counter }}</td>#}
+{#      <td style="color: black">&nbsp;{{ i.ORDERR.Date }}</td>#}
+{#      <td style="color: black">&nbsp;{{ i.ORDERR.Status }}</td>#}
+{#      <td style="color: black">&nbsp;{{ i.ORDERR.Payment_Status }}</td>#}
+{#      <td style="color: black">&nbsp;{{ i.ORDERR.Payment_Date }}</td>#}
+{#      <td style="color: black"> {{ i.ORDERR.Amount }}</td>#}
+{#        <td style="color: black"> {{ i.Quantity }}</td>#}
+{#      <td style="color: black"><b>Name:</b>{{ i.ORDERR.CUSTOMER.Name }}<br><b>Contact:</b>{{ i.ORDERR.CUSTOMER.Phone }}</td>#}
+{##}
+{##}
+{##}
+{#    </tr>#}
+{#      {% endfor %}#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{##}
+{#{% endblock %}#}
+
+
+
+
+
 {% extends 'Seller/index.html' %}
 {% block body %}
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,43 +100,72 @@
 
 
 </style>
+
 </head>
 
 <body>
-<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">Sales Report</h3><br>
+<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">Sales Report</h3>
 
-<form id="form1" name="form1" method="post" action="">
-    <table border="1" class="table table-bordered rounded-table">
-  <tr style="color: black;background-color: #D19C97">
-      <th scope="col">Sl.No</th>
-      <th scope="col">Date</th>
-      <th scope="col">Order Status</th>
-      <th scope="col">Payment Status</th>
-      <th scope="col">Payment Date</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">UserInfo</th>
+<form id="form1" name="form1" method="post" action="/Sales_Report_post#aa">
+{% csrf_token %}
 
-
-    </tr>
-      {% for i in data %}
+<table width="200" border="1" class="table table-bordered rounded-table">
     <tr>
-      <td style="color: black">&nbsp;{{ forloop.counter }}</td>
-      <td style="color: black">&nbsp;{{ i.ORDERR.Date }}</td>
-      <td style="color: black">&nbsp;{{ i.ORDERR.Status }}</td>
-      <td style="color: black">&nbsp;{{ i.ORDERR.Payment_Status }}</td>
-      <td style="color: black">&nbsp;{{ i.ORDERR.Payment_Date }}</td>
-      <td style="color: black"> {{ i.ORDERR.Amount }}</td>
-        <td style="color: black"> {{ i.Quantity }}</td>
-      <td style="color: black"><b>Name:</b>{{ i.ORDERR.CUSTOMER.Name }}<br><b>Contact:</b>{{ i.ORDERR.CUSTOMER.Phone }}</td>
+      <th scope="row">Month</th>
+      <td>
+        <select name="select1" id="select2" class="form-control" required>
+          <option value="select">Select</option>
+          <option value="01">January</option>
+          <option value="02">February</option>
+          <option value="03">March</option>
+          <option value="04">April</option>
+          <option value="05">May</option>
+          <option value="06">June</option>
+          <option value="07">July</option>
+          <option value="08">August</option>
+          <option value="09">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+            <option value="12">December</option>
+      </select></td>
+    </tr>
+    <tr>
+      <th scope="row">Year</th>
+      <td>
+        <select name="select2" id="select3" class="form-control" required>
+          <option value="select">Select</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+      </select></td>
+    </tr>
+    <tr>
+        <td colspan="2" scope="row"><div align="right"><input type="submit" name="button" id="button" value="Submit" class="btn btn-outline-primary" ></div></td>
+    </tr>
+  </table>
+{% if data %}
+    <table width="200" border="1" class="table table-bordered rounded-table">
 
 
+    <tr style="color: black;background-color: #D19C97">
+      <th scope="col">Month</th>
+      <th scope="col">Total</th>
 
     </tr>
-      {% endfor %}
+    <tr>
+
+      <td>&nbsp;{{ selected_month }}</td>
+      <td> {{ total_amount }}</td>
+
+    </tr>
+
   </table>
+
+    {% endif %}
 </form>
 </body>
 </html>
-
 {% endblock %}

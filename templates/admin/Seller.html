@@ -49,7 +49,7 @@
     <td style="color: black">{{ i.Phone }}</td>
     <td style="color: black"><b style="color: black">Place:</b> {{ i.Place }}<br>
         <b style="color: black">Post: </b>{{ i.Post }}<br><b style="color: black">Pincode:</b>{{ i.PIN }} </td>
-    <td style="color: black"><a href="/approve_seller/{{ i.LOGIN.id }}" class="btn btn-primary" onclick="return confirm('Are you sure to Approve ?')">Approve</a><br><br><a href="/reject_seller/{{ i.LOGIN.id }}" class="btn btn-danger" onclick="return confirm('Are you sure to Reject?')">Reject</a> </td>
+    <td style="color: black"><a href="/approve_seller/{{ i.LOGIN.id }}/{{ i.Email }}" class="btn btn-primary" onclick="return confirm('Are you sure to Approve ?')">Approve</a><br><br><a href="/reject_seller/{{ i.LOGIN.id }}/{{ i.Email }}" class="btn btn-danger" onclick="return confirm('Are you sure to Reject?')">Reject</a> </td>
   </tr>
     {% endfor %}
 </table>

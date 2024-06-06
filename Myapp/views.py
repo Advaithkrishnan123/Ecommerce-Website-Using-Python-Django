@@ -1,9 +1,11 @@
+import calendar
 import datetime
+import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from django.core.files.storage import FileSystemStorage
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.shortcuts import render,HttpResponse
 from Myapp.models import *
 
@@ -42,7 +44,7 @@ def forgot_password_post(request):
 
         s = smtplib.SMTP(host='smtp.gmail.com', port=587)
         s.starttls()
-        s.login("demo@gmail.com", "tcap lzzh lmrz afio")
+        s.login("e90958587@gmail.com", "lmhh uawn enjs zegz")
         msg = MIMEMultipart()  # create a message.........."
         msg['From'] = "demo@gmail.com"
         msg['To'] = email
@@ -99,13 +101,44 @@ def view_Seller(request):
     ccc=seller.objects.filter(LOGIN__Usertype='pending')
     return render(request,'admin/Seller.html',{'data':ccc})
 
-def approve_seller(request,id):
+def approve_seller(request,id,Email):
     login.objects.filter(id=id).update(Usertype='seller')
+    try:
+        gmail = smtplib.SMTP('smtp.gmail.com', 587)
+        gmail.ehlo()
+        gmail.starttls()
+        gmail.login('e90958587@gmail.com', 'eiwx llxx ixba rwjr')
+    except Exception as e:
+        print("Couldn't setup email!!" + str(e))
+    msg = MIMEText("Congratulations! Your Seller Account Is Now Active.")
+    msg['Subject'] = 'Verification'
+    msg['To'] = Email
+    msg['From'] = 'e90958587@gmail.com'
+    try:
+        gmail.send_message(msg)
+    except Exception as e:
+        print("COULDN'T SEND EMAIL", str(e))
     return HttpResponse("<script>alert('Approved');window.location='/view_Seller'</script>")
 
-def reject_seller(request,id):
+def reject_seller(request,id,Email):
     login.objects.filter(id=id).update(Usertype='reject')
+    try:
+        gmail = smtplib.SMTP('smtp.gmail.com', 587)
+        gmail.ehlo()
+        gmail.starttls()
+        gmail.login('e90958587@gmail.com', 'eiwx llxx ixba rwjr')
+    except Exception as e:
+        print("Couldn't setup email!!" + str(e))
+    msg = MIMEText("Seller Application Unsuccessful")
+    msg['Subject'] = 'Verification'
+    msg['To'] = Email
+    msg['From'] = 'e90958587@gmail.com'
+    try:
+        gmail.send_message(msg)
+    except Exception as e:
+        print("COULDN'T SEND EMAIL", str(e))
     return HttpResponse("<script>alert('Rejected');window.location='/view_Seller'</script>")
+
 
 def verified_sellers(request):
     if "lid" not in request.session:
@@ -137,7 +170,7 @@ def Product_Add_post(request):
     image = request.FILES['fileField']
     fs = FileSystemStorage()
     dt = datetime.datetime.now().strftime("Y%m%d-%H%M%S")
-    fs.save(r"C:\Users\DELL\Downloads\Ecommerce\Ecommerce\Myapp\static\images\\" + dt + '.jpg',image)
+    fs.save(r"C:\Users\user\Downloads\Ecommerce\Ecommerce\Myapp\static\images\\" + dt + '.jpg',image)
     path = '/static/images/' + dt +'.jpg'
     category = request.POST['select']
     description = request.POST['Description']
@@ -171,7 +204,7 @@ def Update_Product_post(request,id):
        image = request.FILES['fileField']
        fs = FileSystemStorage()
        dt = datetime.datetime.now().strftime("Y%m%d-%H%M%S")
-       fs.save(r"C:\Users\DELL\Downloads\Ecommerce\Ecommerce\Myapp\static\images\\" + dt + '.jpg', image)
+       fs.save(r"C:\Users\user\Downloads\Ecommerce\Ecommerce\Myapp\static\images\\" + dt + '.jpg', image)
        path = '/static/images/' + dt + '.jpg'
        category = request.POST['select']
        description = request.POST['Description']
@@ -344,12 +377,42 @@ def view_ratingss(request,id):
 
         return render(request,'Seller/Rating.html',{'data':data})
 
+
+
+
 def Sales_Report(request):
     if "lid" not in request.session:
-        return HttpResponse("<script>alert('Session Expired,Login again!');window.location='/'</script>")
-    else:
-        q =ordersub.objects.all()
-        return render(request,'Seller/Sales_Report.html',{'data':q})
+        return HttpResponse("<script>alert('Session expired! Login again'); window.location='/'</script>")
+    return render(request, "Seller/Sales_Report.html")
+
+
+def Sales_Report_post(request):
+    selected_month = request.POST['select1']
+    print("kkkkkkk",selected_month)
+    selected_year = request.POST['select2']
+    print("kkkkkkk", selected_year)
+    try:
+        month = int(selected_month)
+        year = int(selected_year)
+    except ValueError:
+        return HttpResponse("<script>alert('Invalid month or year selection.');window.location='/'</script>")
+
+    month_name = calendar.month_name[month]
+    data = orderr.objects.filter(Q(Payment_Status='online')| Q(Payment_Status='offline'),Date__year=year, Date__month=month)
+
+    # data = orderr.objects.filter(Q(Payment_Status='online')| Q(Payment_Status='offline'),Date__year=year)
+    print("dataaaaaaaaa",data)
+    total_amount = data.aggregate(total=Sum('Amount'))['total']
+    context = {
+        'data': data,
+        'total_amount': total_amount,
+        'selected_month': month_name,
+        'selected_year': selected_year
+    }
+    print("oooooooooo",context)
+
+    return render(request, "Seller/Sales_Report.html", {"data": data,"total_amount": total_amount,"selected_month":month_name})
+
 
 def View_Order(request):
     if "lid" not in request.session:
@@ -357,6 +420,10 @@ def View_Order(request):
     else:
         u=ordersub.objects.all()
         return render(request, 'Seller/View_Order.html',{'data':u})
+
+def customer_view_products(request,id):
+    data = product.objects.filter(orderr = id)
+    return render(request,"Customer/view_products.html",{"data":data})
 
 def  update_order_status(request,id):
     if "lid" not in request.session:
@@ -380,7 +447,7 @@ def Home_Page(request):
 
 
 def Seller1(request):
-    return render(request, 'seller_register.html')
+    return render(request,'seller_register.html')
 
 def Seller1_post(request):
     name=request.POST['Name']
@@ -390,7 +457,7 @@ def Seller1_post(request):
     place = request.POST['Place']
     post  = request.POST['POST']
     pin   = request.POST['PIN']
-    log=login.objects.filter(Username=email)
+    log=seller.objects.filter(Name=name,Email=email)
     if log.exists():
         return HttpResponse("<script>alert('the user already exists');window.location='/'</script>")
     else:
@@ -427,7 +494,7 @@ def customer_reg_post(request):
     place = request.POST['Place']
     post  = request.POST['POST']
     pin   = request.POST['PIN']
-    log=login.objects.filter(Username=email)
+    log=customer.objects.filter(Name=name,Email=email)
     if log.exists():
         return HttpResponse("<script>alert('The Customer  is already exists');window.location='/'</script>")
     else:
@@ -477,7 +544,11 @@ def add_to_cart_post(request,id):
     quantity = request.POST['textfield']
     data = cart.objects.filter(CUSTOMER__LOGIN=request.session['lid'],PRODUCT=id)
     if data.exists():
-        return HttpResponse("<script>alert('Product Already in Cart!!');window.location='/user_view_category'</script>")
+        res = data[0]
+        qnty = int(quantity) + int(res.Quantity)
+        res.Quantity = qnty
+        res.save()
+        return HttpResponse("<script>alert('Added to cart');window.location='/customer_view_category'</script>")
     else:
         obj = cart()
         obj.CUSTOMER = customer.objects.get(LOGIN=request.session['lid'])
@@ -500,25 +571,26 @@ def place_order(request,id):
         quantity = i.Quantity
         amount = int(quantity) * int(product_amount)
 
-    if data.exists():
+        if data.exists():
 
-        obj = orderr()
-        obj.Date = datetime.datetime.now().date()
-        obj.Status = 'pending'
-        obj.Payment_Status = 'pending'
-        obj.Payment_Date = 'pending'
-        obj.CUSTOMER = customer.objects.get(LOGIN=request.session['lid'])
-        obj.Amount = amount
-        obj.save()
+            obj = orderr()
+            obj.Date = datetime.datetime.now().date()
+            obj.Status = 'pending'
+            obj.Payment_Status = 'pending'
+            obj.Payment_Date = 'pending'
+            obj.CUSTOMER = customer.objects.get(LOGIN=request.session['lid'])
+            obj.Amount = amount
+            obj.PRODUCT_id = i.PRODUCT_id
+            obj.save()
 
-        for i in data:
-            obj1 = ordersub()
-            obj1.order_date = datetime.datetime.now().date()
-            obj1.Quantity = i.Quantity
-            obj1.ORDERR = obj
-            obj1.save()
-            cart.objects.get(id=id).delete()
-    return HttpResponse("<script>alert('Order Placed');window.location='/view_cart'</script>")
+            for i in data:
+                obj1 = ordersub()
+                obj1.order_date = datetime.datetime.now().date()
+                obj1.Quantity = i.Quantity
+                obj1.ORDERR = obj
+                obj1.save()
+                cart.objects.get(id=id).delete()
+        return HttpResponse("<script>alert('Order Placed');window.location='/view_cart'</script>")
 
 
 def view_order(request):
@@ -588,7 +660,10 @@ def on_payment_success(request,id):
 def view_previous_order(request):
     if "lid" not in request.session:
         return HttpResponse("<script>alert('Session expired!Login again');window.location='/'</script>")
-    data = ordersub.objects.filter(Q(ORDERR__Payment_Status='online')|Q(ORDERR__Payment_Status='offline'),ORDERR__CUSTOMER__LOGIN=request.session['lid'])
+    dt = datetime.datetime.now().date()
+    data = ordersub.objects.filter(Q(ORDERR__Payment_Status='online')|Q(ORDERR__Payment_Status='offline'),
+                                   ORDERR__CUSTOMER__LOGIN=request.session['lid'],ORDERR__Date__lt=dt)
+    print("okkkkkk",data)
     return render(request,"Customer/view_previous_order.html",{"data":data})
 
 
@@ -770,5 +845,5 @@ def send_rating_post(request,id):
         ob.PRODUCT_id = id
         ob.date = datetime.datetime.now().date()
         ob.save()
-        return HttpResponse("<script>alert('Sended');window.location='/customer_home'</script>")
+        return HttpResponse("<script>alert('Sended');window.location='/customer_view_product'</script>")
 

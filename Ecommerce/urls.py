@@ -32,8 +32,8 @@ urlpatterns = [
     path('view_Seller',views.view_Seller),
     path('homepage',views.homepage),
     path('verified_sellers',views.verified_sellers),
-    path('approve_seller/<id>',views.approve_seller),
-    path('reject_seller/<id>',views.reject_seller),
+    path('approve_seller/<id>/<Email>',views.approve_seller),
+    path('reject_seller/<id>/<Email>',views.reject_seller),
     path('logout',views.logout),
 
     #.......................................................
@@ -76,5 +76,7 @@ urlpatterns = [
     path('view_rating/<id>',views.view_rating),
     path('send_rating/<id>',views.send_rating),
     path('send_rating_post/<id>',views.send_rating_post),
+    path('customer_view_products/<id>',views.customer_view_products),
+    path('Sales_Report_post',views.Sales_Report_post),
 
 ]

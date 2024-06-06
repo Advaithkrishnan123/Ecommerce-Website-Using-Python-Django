@@ -49,8 +49,9 @@ class cart(models.Model):
 
 class orderr(models.Model):
     CUSTOMER=models.ForeignKey(customer,on_delete=models.CASCADE)
+    PRODUCT=models.ForeignKey(product,on_delete=models.CASCADE)
     Amount=models.CharField(max_length=100)
-    Date=models.CharField(max_length=100)
+    Date=models.DateField()
     Payment_Status=models.CharField(max_length=255)
     Payment_Date=models.CharField(max_length=255)
     Status=models.CharField(max_length=255)

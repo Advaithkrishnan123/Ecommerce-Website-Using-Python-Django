@@ -55,8 +55,9 @@
       <td style="color: black"> {{ i.Amount }}</td>
       <td style="color: black"><b>Name:</b>{{ i.CUSTOMER.Name }}<br><b>Contact:</b>{{ i.CUSTOMER.Phone }}</td>
       <td>
-          <a href="/cancel_order/{{ i.id }}" onclick="return confirm('Are you sure to cancel?')" class="btn btn-outline-danger">Cancel</a><br><br>
-          <a href="/payment_mode/{{ i.id }}#aa" class="btn btn-outline-primary">Make Payment</a>
+{#          <a href="/cancel_order/{{ i.id }}" onclick="return confirm('Are you sure to cancel?')" class="btn btn-outline-danger">Cancel</a><br><br>#}
+          <a href="/payment_mode/{{ i.id }}#aa" class="btn btn-outline-primary">Make Payment</a><br><br>
+           <a href="/customer_view_products/{{ i.id }}#aa" class="btn btn-outline-primary">View Product</a>
       </td>
 
     </tr>
