@@ -10,6 +10,8 @@ Shopping cart
 User authentication
 Product reviews and ratings
 Discount codes and promotions
+
+## LOGIN PAGE
 ![Login-V3](https://github.com/Advaithkrishnan123/Ecommerce-Website-Using-Python-Django/assets/156499805/61092c6a-2572-4ef7-b95f-1e94f59bcc87)
 ![EShopper-Bootstrap-Shop-Template (2)](https://github.com/Advaithkrishnan123/Ecommerce-Website-Using-Python-Django/assets/156499805/c460d157-f30a-423f-a3fd-790cc8282a73)
 ![EShopper-Bootstrap-Shop-Template (1)](https://github.com/Advaithkrishnan123/Ecommerce-Website-Using-Python-Django/assets/156499805/bd673abf-fbd9-4a4b-aea8-525db3191daf)
