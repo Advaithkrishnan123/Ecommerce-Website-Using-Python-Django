@@ -1,0 +1,70 @@
+{% extends 'Customer/index.html' %}
+{% block body %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+
+    <style>
+    /* Add custom CSS for curved table */
+    .rounded-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 2px solid #dddddd; /* Add a contrasting border color */
+        border-radius: 20px; /* Adjust the radius as needed */
+        overflow: hidden;
+        margin-bottom: 20px; /* Add margin at the bottom */
+    }
+
+    .rounded-table th,
+    .rounded-table td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+
+</style>
+</head>
+
+<body>
+<h3 style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">View Product</h3>
+
+<form id="form1" name="form1" method="post" action="">
+    <table border="1" class="table table-bordered rounded-table">
+  <tr style="color: black;background-color: #D19C97">
+      <th scope="col">Sl.No</th>
+      <th scope="col">Category Name</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Image</th>
+      <th scope="col">Price</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
+
+
+    </tr>
+      {% for i in data %}
+    <tr>
+      <td style="color: black">&nbsp;{{ forloop.counter }}</td>
+      <td style="color: black">&nbsp;{{ i.CATEGORY.Name }}</td>
+      <td style="color: black">&nbsp;{{ i.Name }}</td>
+      <td style="color: black">&nbsp;<img src="{{ i.Image }}" alt="" width="100px" height="100px"></td>
+      <td style="color: black">&nbsp;{{ i.Price }}</td>
+      <td style="color: black">&nbsp;{{ i.Description }}</td>
+      <td>
+          <a href="/add_to_cart/{{ i.id }}#home" class="btn btn-outline-primary" >Add to cart</a><br><br>
+          <a href="/send_rating/{{ i.id }}#home" class="btn btn-outline-primary" >Send Rating</a><br><br>
+          <a href="/view_rating/{{ i.id }}#home" class="btn btn-outline-primary" >View Rating</a>
+
+      </td>
+
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+</html>
+
+{% endblock %}
